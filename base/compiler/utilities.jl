@@ -112,6 +112,11 @@ function retrieve_code_info(linfo::MethodInstance)
         return get_staged(linfo)
     else
         # TODO: post-inference see if we can swap back to the original arrays?
+        println(linfo)
+        println(linfo.def)
+        println(typeof(linfo.def))
+        println(typeof(m.source))
+        println(m.source)
         if isa(m.source, Array{UInt8,1})
             c = ccall(:jl_uncompress_ast, Any, (Any, Any), m, m.source)
         else
@@ -122,7 +127,7 @@ function retrieve_code_info(linfo::MethodInstance)
 end
 
 function code_for_method(method::Method, @nospecialize(atypes), sparams::SimpleVector, world::UInt, preexisting::Bool=false)
-    if world < min_world(method)
+    if world < min_world(method) || world > max_world(method)
         return nothing
     end
     if isdefined(method, :generator) && !isdispatchtuple(atypes)

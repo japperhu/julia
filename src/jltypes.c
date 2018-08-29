@@ -2063,13 +2063,14 @@ void jl_init_types(void) JL_GC_DISABLED
     jl_method_type =
         jl_new_datatype(jl_symbol("Method"), core,
                         jl_any_type, jl_emptysvec,
-                        jl_perm_symsvec(19,
+                        jl_perm_symsvec(20,
                             "name",
                             "module",
                             "file",
                             "line",
                             "sig",
                             "min_world",
+                            "max_world",
                             "ambig",
                             "specializations",
                             "sparam_syms",
@@ -2083,12 +2084,13 @@ void jl_init_types(void) JL_GC_DISABLED
                             "nospecialize",
                             "isva",
                             "pure"),
-                        jl_svec(19,
+                        jl_svec(20,
                             jl_sym_type,
                             jl_module_type,
                             jl_sym_type,
                             jl_int32_type,
                             jl_type_type,
+                            jl_long_type,
                             jl_long_type,
                             jl_any_type, // Union{Array, Nothing}
                             jl_any_type, // TypeMap
@@ -2103,7 +2105,7 @@ void jl_init_types(void) JL_GC_DISABLED
                             jl_int32_type,
                             jl_bool_type,
                             jl_bool_type),
-                        0, 1, 9);
+                        0, 1, 10);
 
     jl_method_instance_type =
         jl_new_datatype(jl_symbol("MethodInstance"), core,
